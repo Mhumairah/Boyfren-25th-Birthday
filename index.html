@@ -109,10 +109,9 @@ body{
   padding: 12px 28px;
   border-radius: 40px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-  white-space: nowrap; /* prevents wrapping to a new line */
+  white-space: nowrap;
   font-size: 1rem;
 }
-
 
 /* CARD PAGE */
 .card {
@@ -212,11 +211,67 @@ body{
   cursor:pointer;
 }
 
-/* RESPONSIVE */
-@media (max-width:768px) {
-  .card h2 { font-size: 1.6rem; }
-  .card p { font-size: 1rem; }
-  .photo-frame { width: 180px; height: 180px; }
+/* ======== RESPONSIVE DESIGN ======== */
+@media (max-width: 768px) {
+  body { padding: 10px; overflow-y: auto; }
+
+  .splash h1 { font-size: 1.6rem; }
+  .splash p { font-size: 0.8rem; }
+
+  .envelope {
+    width: 220px;
+    height: 150px;
+  }
+  .envelope::before {
+    border-left: 110px solid transparent;
+    border-right: 110px solid transparent;
+    border-bottom: 75px solid var(--accent);
+  }
+  .envelope::after {
+    bottom: -50px;
+    font-size: 0.9rem;
+    padding: 10px 20px;
+  }
+
+  .card h2 {
+    font-size: 1.4rem;
+  }
+  .card p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    padding: 16px;
+    max-width: 90%;
+  }
+
+  .photo-frame {
+    width: 160px;
+    height: 160px;
+    border-width: 4px;
+  }
+
+  .music-control {
+    bottom: 15px;
+    left: 15px;
+    gap: 6px;
+  }
+  .btn-icon {
+    padding: 8px 12px;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .splash h1 { font-size: 1.4rem; }
+  .enter-btn { padding: 10px 22px; font-size: 0.9rem; }
+
+  .card p {
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+  .photo-frame {
+    width: 140px;
+    height: 140px;
+  }
 }
 </style>
 </head>
@@ -336,3 +391,4 @@ function startSlideshow(){
 </script>
 </body>
 </html>
+

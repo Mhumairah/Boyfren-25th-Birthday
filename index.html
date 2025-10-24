@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday My Love 💖</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg: linear-gradient(135deg, #0f172a 0%, #1b2a47 100%);
+  --card-bg: rgba(255,255,255,0.04);
+  --primary: #ffd6d9;
+  --accent: #ff758f;
+  --text: #fff;
+  --muted: rgba(255,255,255,0.7);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;}
+body{
+  font-family:Inter,system-ui,"Segoe UI",Roboto;
+  background:var(--bg);
+  color:var(--text);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+}
+
+/* SPLASH SCREEN */
+.splash{
+  position:fixed;
+  inset:0;
+  background:linear-gradient(135deg,#1a1f36,#2a3456);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  z-index:100;
+  text-align:center;
+  animation:fadeIn 1s ease;
+}
+.splash h1{
+  font-family:"Playfair Display",serif;
+  font-size:2rem;
+  letter-spacing:1px;
+  animation:float 2.8s ease-in-out infinite;
+}
+.splash p{color:var(--muted);font-size:.9rem;margin-top:10px;}
+.enter-btn{
+  margin-top:22px;
+  background:linear-gradient(90deg,var(--primary),var(--accent));
+  color:#111;
+  border:none;
+  padding:12px 26px;
+  border-radius:999px;
+  cursor:pointer;
+  font-family:"Playfair Display",serif;
+  font-weight:600;
+  transition:transform .2s ease;
+}
+.enter-btn:hover{transform:scale(1.05);}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+@keyframes fadeOut{from{opacity:1;}to{opacity:0;}}
+
+/* ENVELOPE PAGE */
+.envelope-container {
+  height: 100vh;
+  width:100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--bg);
+}
+.envelope {
+  position: relative;
+  width: 300px;
+  height: 200px;
+  background: var(--card-bg);
+  border: 2px solid var(--accent);
+  border-radius: 6px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+  cursor: pointer;
+  transition: 0.6s;
+}
+.envelope::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  border-left: 150px solid transparent;
+  border-right: 150px solid transparent;
+  border-bottom: 100px solid var(--accent);
+  transition: transform 0.6s;
+  transform-origin: top;
+}
+.envelope.open::before {
+  transform: rotateX(180deg);
+}
+.envelope::after {
+  content: "💌 Tap to Open";
+  position: absolute;
+  bottom: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--primary);
+  font-weight: bold;
+  padding: 12px 28px;
+  border-radius: 40px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  white-space: nowrap; /* prevents wrapping to a new line */
+  font-size: 1rem;
+}
+
+
+/* CARD PAGE */
+.card {
+  position: absolute;
+  top: 0; left: 0;
+  height: 100vh;
+  width: 100%;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  padding: 20px;
+  background: var(--bg);
+  animation: unfold 1.2s ease forwards;
+  transform-origin: top center;
+}
+@keyframes unfold {
+  0% { transform: scaleY(0.1) rotateX(-90deg); opacity: 0; }
+  60% { transform: scaleY(1.05) rotateX(10deg); opacity: 1; }
+  100% { transform: scaleY(1) rotateX(0); opacity: 1; }
+}
+.card h2 {
+  font-size: 2rem;
+  color: var(--primary);
+  margin-bottom: 10px;
+  font-family:"Playfair Display",serif;
+}
+.card p {
+  max-width: 500px;
+  color: var(--muted);
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  background: rgba(255,255,255,0.05);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+}
+
+/* PHOTO SLIDESHOW */
+.photo-frame {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  border: 5px solid var(--accent);
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+}
+.photo-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+.photo-frame img.active {opacity: 1;position: relative;}
+
+/* HEARTS */
+.hearts {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+}
+.heart {
+  position: absolute;
+  bottom: -10px;
+  color: var(--accent);
+  animation: floatUp 5s linear infinite;
+}
+@keyframes floatUp {
+  0% { transform: translateY(0) scale(1); opacity: 1; }
+  100% { transform: translateY(-120vh) scale(1.5); opacity: 0; }
+}
+
+/* MUSIC CONTROL */
+.music-control{
+  position:absolute;
+  bottom:20px;
+  left:20px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.btn-icon{
+  background:rgba(255,255,255,0.05);
+  border:none;
+  color:var(--text);
+  padding:10px 14px;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+/* RESPONSIVE */
+@media (max-width:768px) {
+  .card h2 { font-size: 1.6rem; }
+  .card p { font-size: 1rem; }
+  .photo-frame { width: 180px; height: 180px; }
+}
+</style>
+</head>
+<body>
+
+<!-- SPLASH SCREEN -->
+<div class="splash" id="splash">
+  <h1>💖 Happy Birthday Boyfren 💌</h1>
+  <p>A special e-card made with love — just for you.</p>
+  <button class="enter-btn" id="enterBtn">Tap to Begin</button>
+</div>
+
+<!-- ENVELOPE PAGE -->
+<div class="envelope-container" id="envelopePage" style="display:none;">
+  <div class="envelope" onclick="openEnvelope()"></div>
+</div>
+
+<!-- CARD PAGE -->
+<div class="card" id="cardPage">
+  <audio id="song" src="Nadhif Basalamah - penjaga hati (Lirik).mp3" preload="auto" loop></audio>
+  <div class="hearts" id="hearts"></div>
+
+  <!-- Slideshow -->
+  <div class="photo-frame" id="photoSlider">
+    <img src="anep.jpg" alt="Photo 1">
+    <img src="anep1.jpg" alt="Photo 2">
+    <img src="anep2.jpg" alt="Photo 3">
+    <img src="anep3.jpg" alt="Photo 4">
+    <img src="anep4.jpg" alt="Photo 5">
+  </div>
+
+  <h2>Happy Birthday, My Love ❤️</h2>
+  <p>
+    You are my sunshine, my comfort, and my reason to smile.  
+    On your special day, I just want to remind you how much I love you. 💖  
+    It’s been 70 days since I met you, and 48 days since we started getting serious —  
+    but honestly, it feels like you’ve been part of my life for much longer. You treat  
+    me like your little princess, always there when I need you, always making sure I feel safe and loved.  
+    Thank you for being my saver, my strength, and my biggest supporter.  
+    I hope no matter what happens, you’ll always stay the same — the person who never lets go of my hand.  
+    Happy 25th Birthday, boyfren. Here’s to us — to more laughter, more adventures, and more moments we’ll never forget. ❤️
+  </p>
+
+  <div class="music-control">
+    <button class="btn-icon" id="playPauseBtn">Play</button>
+    <span style="color:var(--muted);font-size:.8rem;">Music: Penjaga Hati</span>
+  </div>
+</div>
+
+<script>
+const splash = document.getElementById('splash');
+const enterBtn = document.getElementById('enterBtn');
+const envelopePage = document.getElementById('envelopePage');
+const cardPage = document.getElementById('cardPage');
+const song = document.getElementById('song');
+const playPauseBtn = document.getElementById('playPauseBtn');
+const hearts = document.getElementById('hearts');
+const slider = document.getElementById('photoSlider');
+const slides = slider.querySelectorAll('img');
+let current = 0;
+
+enterBtn.addEventListener('click', () => {
+  splash.style.animation = 'fadeOut 1s forwards';
+  setTimeout(() => {
+    splash.style.display = 'none';
+    envelopePage.style.display = 'flex';
+  }, 1000);
+});
+
+function openEnvelope() {
+  const envelope = document.querySelector('.envelope');
+  envelope.classList.add('open');
+  setTimeout(() => {
+    envelopePage.style.display = 'none';
+    cardPage.style.display = 'flex';
+    song.play().catch(()=>{});
+    playPauseBtn.textContent = 'Pause';
+    createHearts();
+    startSlideshow();
+  }, 1200);
+}
+
+playPauseBtn.addEventListener('click', ()=>{
+  if(song.paused){
+    song.play();
+    playPauseBtn.textContent='Pause';
+  } else {
+    song.pause();
+    playPauseBtn.textContent='Play';
+  }
+});
+
+function createHearts(){
+  setInterval(()=>{
+    const heart=document.createElement('div');
+    heart.className='heart';
+    heart.innerHTML='❤️';
+    heart.style.left=Math.random()*100+'vw';
+    heart.style.fontSize=(Math.random()*20+15)+'px';
+    hearts.appendChild(heart);
+    setTimeout(()=>heart.remove(),5000);
+  },400);
+}
+
+function startSlideshow(){
+  if(slides.length>1){
+    slides[current].classList.add("active");
+    setInterval(()=>{
+      slides[current].classList.remove("active");
+      current=(current+1)%slides.length;
+      slides[current].classList.add("active");
+    },4000);
+  } else if(slides.length===1){
+    slides[0].classList.add("active");
+  }
+}
+</script>
+</body>
+</html>
